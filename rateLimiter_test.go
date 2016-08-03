@@ -9,8 +9,7 @@ import (
 )
 
 import (
-	"github.com/meshhq/meshCore/lib/gotils"
-	"github.com/meshhq/meshCore/lib/meshRedis"
+	"github.com/meshhq/meshRedis"
 	. "gopkg.in/check.v1"
 )
 
@@ -61,7 +60,7 @@ func (r *RateLimiterTest) TestSuccessfulRateLimiting(c *C) {
 	rateLimiter := NewLimiter(limiterInfo, pool)
 
 	// Tracking Begin Time
-	beginTime := gotils.UnixInMilliseconds()
+	beginTime := unixInMilliseconds()
 
 	// Sync the outcome
 	var wg sync.WaitGroup
@@ -92,7 +91,7 @@ func (r *RateLimiterTest) TestSuccessfulRateLimiting(c *C) {
 
 	// Tracking End Time
 	// This should be slightly over 2 seconds
-	endTime := gotils.UnixInMilliseconds()
+	endTime := unixInMilliseconds()
 
 	totalTime := endTime - beginTime
 	c.Assert(totalTime > 2000, Equals, true)
@@ -113,7 +112,7 @@ func (r *RateLimiterTest) TestSuccessfulRateLimitingWithHigherNumOfOps(c *C) {
 	rateLimiter := NewLimiter(limiterInfo, meshRedis.UnderlyingPool())
 
 	// Tracking Begin Time
-	beginTime := gotils.UnixInMilliseconds()
+	beginTime := unixInMilliseconds()
 
 	// Sync the outcome
 	var wg sync.WaitGroup
@@ -144,7 +143,7 @@ func (r *RateLimiterTest) TestSuccessfulRateLimitingWithHigherNumOfOps(c *C) {
 
 	// Tracking End Time
 	// This should be slightly over 2 seconds
-	endTime := gotils.UnixInMilliseconds()
+	endTime := unixInMilliseconds()
 	totalTime := endTime - beginTime
 	c.Assert(totalTime > 2000, Equals, true)
 	c.Assert(totalTime < 3000, Equals, true)
@@ -182,4 +181,13 @@ func (r *RateLimiterTest) TestRateLimitingDoesNotExceedRequestsInATimeInterval(c
 
 	// Match the counts to make sure all completed
 	c.Assert(successCount < totalCount, Equals, true)
+}
+
+/**
+ * Mini time helper
+ */
+
+// unixInMilliseconds returns the current time in milliseconds
+func unixInMilliseconds() int64 {
+	return time.Now().UnixNano() / int64(time.Millisecond)
 }

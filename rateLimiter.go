@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/hjr265/redsync.go/redsync"
-	"github.com/meshhq/meshCore/lib/meshLog"
-	"github.com/meshhq/meshCore/lib/meshRedis"
+	"github.com/meshhq/meshLog"
+	"github.com/meshhq/meshRedis"
 )
 
 const (
