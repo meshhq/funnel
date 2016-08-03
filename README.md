@@ -13,7 +13,7 @@ The most common use for a rate limiter is probably commercial APIs. If you are c
 ### Why wouldn't I use the [Rate Limiter](https://github.com/golang/go/wiki/RateLimiting) from the GoWiki?
 *Funnel* is a distributed solution for limiting control to a resource, while the one provided in the wiki only works if the access is limited to one process. Their solution doesn't hold up for scenarios when you have more than one apps (processes) trying to reach a resource.
 
-### Usage
+### How do I use funnel?
 
 #### Setup
 Funnel needs three pieces of infomation to help you limit access to a resource:
@@ -55,7 +55,8 @@ func main() {
         rateLimiter.Enter()
         // (Make Request)
     }
-    // Two seconds will have elapsed when the loop finishes
+    // At least two seconds will have elapsed when the loop finishes
+    // There were never more than 20 requests per second
 }
 ```
 
