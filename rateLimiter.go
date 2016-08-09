@@ -2,6 +2,7 @@ package funnel
 
 import (
 	"errors"
+	"fmt"
 	"math/rand"
 	"sync"
 	"time"
@@ -94,7 +95,12 @@ type RateLimiter struct {
 }
 
 // NewLimiter is a factory method for creating a rate limiter
-func NewLimiter(limitInfo *RateLimitInfo, pool meshRedis.RedPool) *RateLimiter {
+func NewLimiter(limitInfo *RateLimitInfo) (*RateLimiter, error) {
+	pool := meshRedis.UnderlyingPool()
+	if pool == nil {
+		return nil, fmt.Errorf("Failed to acquire Redis pool. Check that meshRedis is connected.")
+	}
+
 	// Append additional string on tag
 	limiterToken := limitInfo.Token + "_rateLimiterToken"
 	limiter := &RateLimiter{
@@ -105,7 +111,7 @@ func NewLimiter(limitInfo *RateLimitInfo, pool meshRedis.RedPool) *RateLimiter {
 	}
 	limiter.mutex = &sync.Mutex{}
 	limiter.pool = pool
-	return limiter
+	return limiter, nil
 }
 
 // Enter attempts to enter the request into the current pool

@@ -56,8 +56,8 @@ func (r *RateLimiterTest) TestSuccessfulRateLimiting(c *C) {
 		TimeInterval: 1000,
 	}
 
-	pool := meshRedis.UnderlyingPool()
-	rateLimiter := NewLimiter(limiterInfo, pool)
+	rateLimiter, err := NewLimiter(limiterInfo)
+	c.Assert(err, IsNil)
 
 	// Tracking Begin Time
 	beginTime := unixInMilliseconds()
@@ -109,7 +109,7 @@ func (r *RateLimiterTest) TestSuccessfulRateLimitingWithHigherNumOfOps(c *C) {
 		TimeInterval: 1000,
 	}
 
-	rateLimiter := NewLimiter(limiterInfo, meshRedis.UnderlyingPool())
+	rateLimiter, _ := NewLimiter(limiterInfo)
 
 	// Tracking Begin Time
 	beginTime := unixInMilliseconds()
@@ -160,7 +160,7 @@ func (r *RateLimiterTest) TestRateLimitingDoesNotExceedRequestsInATimeInterval(c
 		TimeInterval: 1000,
 	}
 
-	rateLimiter := NewLimiter(limiterInfo, meshRedis.UnderlyingPool())
+	rateLimiter, _ := NewLimiter(limiterInfo)
 
 	// Sync the outcome
 	var successCount uint64
