@@ -7,9 +7,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/meshhq/funnel/Godeps/_workspace/src/github.com/hjr265/redsync.go/redsync"
-	"github.com/meshhq/funnel/Godeps/_workspace/src/github.com/meshhq/meshLog"
-	"github.com/meshhq/funnel/Godeps/_workspace/src/github.com/meshhq/meshRedis"
+	"github.com/hjr265/redsync.go/redsync"
+	"github.com/meshhq/meshLog"
+	"github.com/meshhq/meshRedis"
 )
 
 const (
