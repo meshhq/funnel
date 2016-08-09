@@ -1,4 +1,4 @@
-package gohttp
+package funnel
 
 import (
 	"flag"
@@ -9,8 +9,8 @@ import (
 )
 
 import (
-	"github.com/meshhq/meshRedis"
-	. "gopkg.in/check.v1"
+	"github.com/meshhq/funnel/Godeps/_workspace/src/github.com/meshhq/meshRedis"
+	. "github.com/meshhq/funnel/Godeps/_workspace/src/gopkg.in/check.v1"
 )
 
 // Hook up gocheck into the "go test" runner.
