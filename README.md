@@ -28,33 +28,31 @@ Funnel needs three pieces of infomation to help you limit access to a resource:
 - The duration (time interval) for the limiter
 - A token to uniquely identify the limted resource
 ```go
-import "github.com/garyburd/redigo/redis"
+import "github.com/meshhq/funnel"
 
 func main() {
-    pool := &redis.Pool{}
-    limiterInfo := &RateLimitInfo{
+    limiterInfo := &funnel.RateLimitInfo{
             Token:        "uniqueToken",
             MaxRequests:  20,
             TimeInterval: 1000,
         }
-    rateLimiter := NewLimiter(limiterInfo, pool)    
+    rateLimiter := funnel.NewLimiter(limiterInfo)    
 }
 ```
 
 #### Use
 After funnel is initialized, all you have to do is call `Enter()`. If there is room in the limiter, `Enter()` will let the execution continue. If the limtiter has reached it's max capacity for a given time interval, it will block until the limiter has expired. 
 ```go
-import "github.com/garyburd/redigo/redis"
+import "github.com/meshhq/funnel"
 
 func main() {
-    pool := &redis.Pool{}
     // Limiter is set to a max of 20 Requests / Second
-    limiterInfo := &RateLimitInfo{
+    limiterInfo := &funnel.RateLimitInfo{
             Token:        "uniqueToken",
             MaxRequests:  20,
             TimeInterval: 1000,
         }
-    rateLimiter := NewLimiter(limiterInfo, pool)    
+    rateLimiter := funnel.NewLimiter(limiterInfo)    
 
     // Send 41 requests
     for i := 0; i < 41; i++ {
